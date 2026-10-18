@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaibhav Gajewar - Lead Data Engineer Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#00f0ff',
+                            purple: '#7000ff',
+                            dark: '#0b0f19',
+                            card: '#151c2e',
+                            cardHover: '#1c263e',
+                            border: '#23304d',
+                            textMuted: '#94a3b8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+            color: #f8fafc;
+        }
+        /* Custom glow effects */
+        .glow-cyan {
+            box-shadow: 0 0 25px -5px rgba(0, 240, 255, 0.25);
+        }
+        .glow-purple {
+            box-shadow: 0 0 25px -5px rgba(112, 0, 255, 0.25);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #00f0ff 0%, #7000ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .border-gradient {
+            border-image: linear-gradient(135deg, #00f0ff, #7000ff) 1;
+        }
+        /* Grid background pattern */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        /* Toast Notification */
+        #toast {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-slate-100 min-h-screen flex flex-col selection:bg-cyan-500 selection:text-black">
+
+    <!-- Toast Banner for Copy Actions -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 bg-brand-card border border-cyan-500/50 text-cyan-300 px-5 py-3 rounded-xl shadow-2xl flex items-center space-x-3 pointer-events-none">
+        <i class="fa-solid fa-circle-check text-cyan-400 text-lg"></i>
+        <span id="toast-message" class="text-sm font-medium">Copied to clipboard!</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <nav class="sticky top-0 z-40 backdrop-blur-md bg-brand-dark/80 border-b border-brand-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg glow-cyan">
+                        VG
+                    </div>
+                    <div>
+                        <span class="font-bold text-lg tracking-tight text-white block leading-tight">Vaibhav Gajewar</span>
+                        <span class="text-xs text-brand-textMuted font-mono">Data Engineer</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                    <a href="#summary" class="text-slate-300 hover:text-cyan-400 transition-colors">Summary</a>
+                    <a href="#skills" class="text-slate-300 hover:text-cyan-400 transition-colors">Skills</a>
+                    <a href="#experience" class="text-slate-300 hover:text-cyan-400 transition-colors">Experience</a>
+                    <a href="#education" class="text-slate-300 hover:text-cyan-400 transition-colors">Education & Certs</a>
+                    <a href="#contact" class="px-4 py-2 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/20 transition-all">Get in Touch</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" type="button" class="text-slate-300 hover:text-white p-2">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-b border-brand-border bg-brand-card/95 px-4 pt-2 pb-4 space-y-2 text-sm">
+            <a href="#summary" class="block py-2 text-slate-300 hover:text-cyan-400 mobile-link">Summary</a>
+            <a href="#skills" class="block py-2 text-slate-300 hover:text-cyan-400 mobile-link">Skills</a>
+            <a href="#experience" class="block py-2 text-slate-300 hover:text-cyan-400 mobile-link">Experience</a>
+            <a href="#education" class="block py-2 text-slate-300 hover:text-cyan-400 mobile-link">Education & Certs</a>
+            <a href="#contact" class="block py-2 text-cyan-400 font-medium mobile-link">Get in Touch</a>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16 bg-grid">
+
+        <!-- Hero Section -->
+        <section id="summary" class="relative pt-6 pb-12 rounded-3xl bg-gradient-to-b from-brand-card/60 to-transparent border border-brand-border/50 p-6 md:p-10 overflow-hidden">
+            <div class="absolute -top-24 -right-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-8 space-y-6">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400 text-xs font-semibold tracking-wide">
+                        <i class="fa-solid fa-certificate"></i>
+                        <span>Microsoft Certified Azure Data Engineer</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white">
+                        Building Scalable <br>
+                        <span class="text-gradient">Data Pipelines & Lakehouses</span>
+                    </h1>
+
+                    <p class="text-slate-300 text-base md:text-lg leading-relaxed max-w-3xl">
+                        Data Engineer with <strong class="text-cyan-300 font-semibold">6+ years of experience</strong> specializing in modern cloud data platforms, Medallion Lakehouse architectures, serverless ETL pipelines, real-time analytics, and automated data governance across Microsoft Fabric, GCP, and AWS environments.
+                    </p>
+
+                    <!-- Quick Highlights Badges -->
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <span class="px-3 py-1.5 rounded-lg bg-brand-border/60 text-slate-200 text-xs font-medium border border-slate-700/60"><i class="fa-solid fa-cubes text-cyan-400 mr-2"></i>MS Fabric Lakehouse</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-brand-border/60 text-slate-200 text-xs font-medium border border-slate-700/60"><i class="fa-solid fa-bolt text-yellow-400 mr-2"></i>PySpark & Delta Lake</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-brand-border/60 text-slate-200 text-xs font-medium border border-slate-700/60"><i class="fa-brands fa-aws text-amber-400 mr-2"></i>AWS Serverless ETL</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-brand-border/60 text-slate-200 text-xs font-medium border border-slate-700/60"><i class="fa-brands fa-google text-blue-400 mr-2"></i>GCP BigQuery & Dataflow</span>
+                    </div>
+
+                    <!-- Contact Buttons -->
+                    <div class="pt-4 flex flex-wrap gap-4 items-center">
+                        <a href="https://www.linkedin.com/in/vaibhav-gajewar-dataengineer" target="_blank" rel="noopener noreferrer" class="px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-sm flex items-center space-x-2 shadow-lg glow-cyan transition-all transform hover:-translate-y-0.5">
+                            <i class="fa-brands fa-linkedin text-lg"></i>
+                            <span>Connect on LinkedIn</span>
+                        </a>
+
+                        <button onclick="copyToClipboard('vaibhavgajewar1@gmail.com', 'Email address')" class="px-5 py-3 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-border text-slate-200 text-sm font-medium flex items-center space-x-2 transition-all">
+                            <i class="fa-solid fa-envelope text-cyan-400"></i>
+                            <span>vaibhavgajewar1@gmail.com</span>
+                            <i class="fa-regular fa-copy text-xs text-brand-textMuted ml-1"></i>
+                        </button>
+
+                        <button onclick="copyToClipboard('7675801488', 'Phone number')" class="px-4 py-3 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-brand-border text-slate-200 text-sm font-medium flex items-center space-x-2 transition-all">
+                            <i class="fa-solid fa-phone text-emerald-400"></i>
+                            <span>+91 7675801488</span>
+                            <i class="fa-regular fa-copy text-xs text-brand-textMuted ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Side Interactive Card -->
+                <div class="lg:col-span-4">
+                    <div class="rounded-2xl bg-brand-card border border-brand-border p-6 shadow-xl relative">
+                        <div class="flex items-center justify-between pb-4 border-b border-brand-border/60">
+                            <span class="text-xs font-mono text-cyan-400 uppercase tracking-wider">Career Metrics</span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        </div>
+                        <div class="space-y-5 pt-4">
+                            <div>
+                                <p class="text-3xl font-extrabold text-white">6+ Years</p>
+                                <p class="text-xs text-brand-textMuted mt-0.5">Data Engineering & Analytics Experience</p>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-brand-dark/50 p-3 rounded-xl border border-brand-border/50">
+                                    <p class="text-xl font-bold text-cyan-400">3 Cloud</p>
+                                    <p class="text-xs text-slate-400">Fabric, GCP, AWS</p>
+                                </div>
+                                <div class="bg-brand-dark/50 p-3 rounded-xl border border-brand-border/50">
+                                    <p class="text-xl font-bold text-purple-400">Medallion</p>
+                                    <p class="text-xs text-slate-400">Bronze/Silver/Gold</p>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-r from-cyan-950/40 to-purple-950/40 p-4 rounded-xl border border-cyan-500/20 text-xs space-y-2">
+                                <div class="flex justify-between text-slate-300">
+                                    <span>Azure Data Engineer</span>
+                                    <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-circle-check"></i> Certified</span>
+                                </div>
+                                <div class="flex justify-between text-slate-300">
+                                    <span>Education</span>
+                                    <span class="text-slate-400">B.E. Mechanical (2017)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Skill Set Section -->
+        <section id="skills" class="space-y-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-brand-border pb-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+                        <i class="fa-solid fa-code text-cyan-400"></i> Technical Expertise
+                    </h2>
+                    <p class="text-sm text-brand-textMuted mt-1">Categorized core engineering skills and stack proficiency</p>
+                </div>
+
+                <!-- Skill Filter Tabs -->
+                <div class="flex flex-wrap gap-2 bg-brand-card p-1.5 rounded-xl border border-brand-border text-xs font-medium">
+                    <button onclick="filterSkills('all')" class="skill-tab-btn active px-3 py-1.5 rounded-lg transition-all bg-cyan-500 text-slate-950 font-bold" data-category="all">All Skills</button>
+                    <button onclick="filterSkills('cloud')" class="skill-tab-btn px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition-all" data-category="cloud">Cloud & Fabric</button>
+                    <button onclick="filterSkills('bigdata')" class="skill-tab-btn px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition-all" data-category="bigdata">Big Data & DBs</button>
+                    <button onclick="filterSkills('etl')" class="skill-tab-btn px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition-all" data-category="etl">ETL & Governance</button>
+                    <button onclick="filterSkills('prog')" class="skill-tab-btn px-3 py-1.5 rounded-lg text-slate-300 hover:text-white transition-all" data-category="prog">Languages & Tools</button>
+                </div>
+            </div>
+
+            <!-- Grid of Skill Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="skills-container">
+
+                <!-- Skill Card 1: Cloud Platforms -->
+                <div class="skill-card bg-brand-card border border-brand-border rounded-2xl p-6 space-y-4 hover:border-cyan-500/50 transition-all shadow-lg" data-category="cloud">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-2.5 bg-cyan-500/10 rounded-xl text-cyan-400">
+                                <i class="fa-solid fa-cloud text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-white">Cloud Platforms & MS Fabric</h3>
+                        </div>
+                        <span class="text-xs font-mono text-cyan-400 bg-cyan-950/80 px-2.5 py-1 rounded-full border border-cyan-500/30">Primary Stack</span>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="p-3 bg-brand-dark/60 rounded-xl border border-brand-border/40">
+                            <span class="text-xs font-semibold text-cyan-300 block mb-1">Microsoft Fabric Ecosystem</span>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="bg-cyan-950/60 text-cyan-200 border border-cyan-800/50 text-xs px-2.5 py-1 rounded-md">Lakehouse</span>
+                                <span class="bg-cyan-950/60 text-cyan-200 border border-cyan-800/50 text-xs px-2.5 py-1 rounded-md">SQL Analytics Endpoint</span>
+                                <span class="bg-cyan-950/60 text-cyan-200 border border-cyan-800/50 text-xs px-2.5 py-1 rounded-md">Data Factory/Pipelines</span>
+                                <span class="bg-cyan-950/60 text-cyan-200 border border-cyan-800/50 text-xs px-2.5 py-1 rounded-md">Git Integration</span>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-brand-dark/60 rounded-xl border border-brand-border/40">
+                            <span class="text-xs font-semibold text-blue-300 block mb-1">Google Cloud Platform (GCP)</span>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="bg-slate-800/80 text-slate-200 border border-slate-700 text-xs px-2 py-0.5 rounded-md">BigQuery</span>
+                                <span class="bg-slate-800/80 text-slate-200 border border-slate-700 text-xs px-2 py-0.5 rounded-md">Cloud Storage</span>
+                                <span class="bg-slate-800/80 text-slate-200 border border-slate-700 text-xs px-2 py-0.5 rounded-md">Dataflow</span>
+                                <span class="bg-slate-800/80 text-slate-200 border border-slate-700 text-xs px-2 py-0.5 rounded-md">Pub/Sub</span>
+                                <span class="bg-slate-800/80 text-slate-200 border border-slate-700 text-xs px-2 py-0.5 rounded-md">Cloud Composer</span>
+                                <span class="bg-slate-800/80 text-slate-200 border border-slate-700 text-xs px-2 py-0.5 rounded-md">Cloud Monitoring</span>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-brand-dark/60 rounded-xl border border-brand-border/40">
+                            <span class="text-xs font-semibold text-amber-300 block mb-1">Amazon Web Services (AWS)</span>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="bg-slate-800/80 text-slate-200 border border-slate-700 text-xs px-2 py-0.5 rounded-md">S3</span>
+                                <span class="bg-slate-800/80 text-slate-200 border border-slate-700 text-xs px-2 py-0.5 rounded-md">AWS Glue</span>
+                                <span class="bg-slate-800/80 text-slate-200 border border-slate-700 text-xs px-2 py-0.5 rounded-md">Lambda</span>
+                                <span class="bg-slate-800/80 text-slate-200 border border-slate-700 text-xs px-2 py-0.5 rounded-md">EMR</span>
+                                <span class="bg-slate-800/80 text-slate-200 border border-slate-700 text-xs px-2 py-0.5 rounded-md">MWAA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill Card 2: Big Data & Databases -->
+                <div class="skill-card bg-brand-card border border-brand-border rounded-2xl p-6 space-y-4 hover:border-purple-500/50 transition-all shadow-lg" data-category="bigdata">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-2.5 bg-purple-500/10 rounded-xl text-purple-400">
+                                <i class="fa-solid fa-database text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-white">Big Data & Warehousing</h3>
+                        </div>
+                        <span class="text-xs font-mono text-purple-400 bg-purple-950/80 px-2.5 py-1 rounded-full border border-purple-500/30">Analytics & SQL</span>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div>
+                            <span class="text-xs font-semibold text-slate-400 block mb-1.5">Big Data Processing Engine</span>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-purple-950/40 text-purple-200 border border-purple-500/30 rounded-lg text-xs font-medium">Apache Spark</span>
+                                <span class="px-3 py-1 bg-purple-950/40 text-purple-200 border border-purple-500/30 rounded-lg text-xs font-medium">PySpark</span>
+                                <span class="px-3 py-1 bg-purple-950/40 text-purple-200 border border-purple-500/30 rounded-lg text-xs font-medium">Spark SQL</span>
+                                <span class="px-3 py-1 bg-purple-950/40 text-purple-200 border border-purple-500/30 rounded-lg text-xs font-medium">Apache Hive</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-2">
+                            <span class="text-xs font-semibold text-slate-400 block mb-1.5">Cloud Data Warehouses & Relational DBs</span>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md text-xs border border-slate-700">BigQuery</span>
+                                <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md text-xs border border-slate-700">Snowflake</span>
+                                <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md text-xs border border-slate-700">Amazon Redshift</span>
+                                <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md text-xs border border-slate-700">MS SQL Server</span>
+                                <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md text-xs border border-slate-700">PostgreSQL</span>
+                                <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md text-xs border border-slate-700">Oracle</span>
+                                <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md text-xs border border-slate-700">MySQL</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill Card 3: ETL & Orchestration -->
+                <div class="skill-card bg-brand-card border border-brand-border rounded-2xl p-6 space-y-4 hover:border-emerald-500/50 transition-all shadow-lg" data-category="etl">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-2.5 bg-emerald-500/10 rounded-xl text-emerald-400">
+                                <i class="fa-solid fa-diagram-project text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-white">ETL, Pipelines & Governance</h3>
+                        </div>
+                        <span class="text-xs font-mono text-emerald-400 bg-emerald-950/80 px-2.5 py-1 rounded-full border border-emerald-500/30">Orchestration</span>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div>
+                            <span class="text-xs font-semibold text-slate-400 block mb-1.5">Orchestration & Workflow Tools</span>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md text-xs border border-slate-700">Fabric Data Pipelines</span>
+                                <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md text-xs border border-slate-700">Fabric Notebooks</span>
+                                <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md text-xs border border-slate-700">Apache Airflow</span>
+                                <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md text-xs border border-slate-700">Cloud Composer</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-semibold text-slate-400 block mb-1.5">Informatica & Ingestion Platforms</span>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2.5 py-1 bg-emerald-950/40 text-emerald-200 border border-emerald-500/30 rounded-md text-xs">Informatica IICS</span>
+                                <span class="px-2.5 py-1 bg-emerald-950/40 text-emerald-200 border border-emerald-500/30 rounded-md text-xs">MCC Scanners</span>
+                                <span class="px-2.5 py-1 bg-emerald-950/40 text-emerald-200 border border-emerald-500/30 rounded-md text-xs">Catalog REST APIs</span>
+                                <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md text-xs border border-slate-700">Talend</span>
+                                <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md text-xs border border-slate-700">Fivetran</span>
+                                <span class="px-2.5 py-1 bg-slate-800 text-slate-200 rounded-md text-xs border border-slate-700">Stitch</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill Card 4: Languages & Tools -->
+                <div class="skill-card bg-brand-card border border-brand-border rounded-2xl p-6 space-y-4 hover:border-yellow-500/50 transition-all shadow-lg" data-category="prog">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="p-2.5 bg-yellow-500/10 rounded-xl text-yellow-400">
+                                <i class="fa-solid fa-code-branch text-xl"></i>
+                            </div>
+                            <h3 class="font-bold text-lg text-white">Languages, BI & Dev Tools</h3>
+                        </div>
+                        <span class="text-xs font-mono text-yellow-400 bg-yellow-950/80 px-2.5 py-1 rounded-full border border-yellow-500/30">Dev Tools</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="p-3 bg-brand-dark/60 rounded-xl border border-brand-border/40 space-y-1">
+                            <span class="text-xs text-brand-textMuted block">Core Languages</span>
+                            <span class="text-sm font-semibold text-white block">Python, SQL, PySpark</span>
+                        </div>
+                        <div class="p-3 bg-brand-dark/60 rounded-xl border border-brand-border/40 space-y-1">
+                            <span class="text-xs text-brand-textMuted block">BI & Visualization</span>
+                            <span class="text-sm font-semibold text-white block">Power BI, Excel</span>
+                        </div>
+                        <div class="p-3 bg-brand-dark/60 rounded-xl border border-brand-border/40 space-y-1">
+                            <span class="text-xs text-brand-textMuted block">Interfaces & APIs</span>
+                            <span class="text-sm font-semibold text-white block">REST APIs, Databricks</span>
+                        </div>
+                        <div class="p-3 bg-brand-dark/60 rounded-xl border border-brand-border/40 space-y-1">
+                            <span class="text-xs text-brand-textMuted block">IDE & Versioning</span>
+                            <span class="text-sm font-semibold text-white block">Git, Jupyter, PyCharm</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Professional Experience Section (STRICT TOP 3 COMPANIES) -->
+        <section id="experience" class="space-y-8">
+            <div class="border-b border-brand-border pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white flex items-center gap-3">
+                        <i class="fa-solid fa-briefcase text-cyan-400"></i> Professional Experience
+                    </h2>
+                    <p class="text-sm text-brand-textMuted mt-1">Key Data Engineering Roles & Technical Contributions (Latest 3 Organizations)</p>
+                </div>
+                <span class="text-xs font-mono text-cyan-400 bg-cyan-950/50 px-3 py-1 rounded-lg border border-cyan-500/30 self-start sm:self-auto">
+                    Data Engineering Focus
+                </span>
+            </div>
+
+            <div class="space-y-8 relative">
+
+                <!-- Company 1: Netlink Software Pvt Ltd -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-6 md:p-8 space-y-6 relative overflow-hidden group hover:border-cyan-500/50 transition-all shadow-xl">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-brand-border/60 pb-5">
+                        <div>
+                            <div class="flex items-center space-x-3">
+                                <h3 class="text-xl md:text-2xl font-extrabold text-white">Netlink Software Pvt Ltd</h3>
+                                <span class="px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-semibold border border-cyan-500/30">Current</span>
+                            </div>
+                            <p class="text-cyan-400 font-medium text-sm mt-1">Senior Software Engineer</p>
+                        </div>
+                        <div class="text-left md:text-right">
+                            <span class="inline-block px-3 py-1 rounded-lg bg-brand-dark border border-brand-border text-xs font-mono text-slate-300">
+                                <i class="fa-regular fa-calendar-alt text-cyan-400 mr-2"></i>Sept 2024 – Present
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Projects Accordions/Cards -->
+                    <div class="space-y-6">
+
+                        <!-- Project 1.1 -->
+                        <div class="bg-brand-dark/70 rounded-xl p-5 border border-brand-border/60 space-y-3">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <h4 class="text-base font-bold text-cyan-300 flex items-center gap-2">
+                                    <i class="fa-solid fa-layer-group text-sm"></i> Project: Microsoft Fabric Medallion Data Platform
+                                </h4>
+                                <span class="text-xs font-mono text-slate-400 bg-brand-border/40 px-2.5 py-1 rounded">April 2025 – Present</span>
+                            </div>
+                            <ul class="space-y-2 text-xs sm:text-sm text-slate-300 list-disc list-inside leading-relaxed">
+                                <li>Designed and implemented a scalable <strong class="text-white">Medallion Architecture (Bronze, Silver, Gold layers)</strong> using Microsoft Fabric Lakehouse for enterprise data processing.</li>
+                                <li>Developed modular Fabric Notebooks using <strong class="text-white">PySpark and Spark SQL</strong> to ingest raw client MS SQL Server data into Bronze, clean/transform into Delta Parquet format in Silver, and aggregate metrics into Gold dimensional models.</li>
+                                <li>Connected Gold layer tables directly to <strong class="text-white">Power BI</strong> for business reporting and utilized the SQL Analytics Endpoint to execute T-SQL queries for ad-hoc inspection and validation.</li>
+                                <li>Orchestrated workflows with Fabric Data Pipelines and integrated Spark notebooks and pipeline assets with Azure DevOps / GitHub via Fabric Git Integration.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Project 1.2 -->
+                        <div class="bg-brand-dark/70 rounded-xl p-5 border border-brand-border/60 space-y-3">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <h4 class="text-base font-bold text-amber-300 flex items-center gap-2">
+                                    <i class="fa-brands fa-aws text-sm"></i> Project: AWS Event-Driven Serverless ETL Pipeline
+                                </h4>
+                            </div>
+                            <ul class="space-y-2 text-xs sm:text-sm text-slate-300 list-disc list-inside leading-relaxed">
+                                <li>Designed and implemented an event-driven serverless data ingestion pipeline using <strong class="text-white">AWS S3, Lambda, and Glue</strong> to process incoming CSV and Excel files automatically.</li>
+                                <li>Configured S3 event notifications to instantly trigger AWS Lambda functions upon file arrival, programmatically passing parameters to execute targeted AWS Glue ETL jobs.</li>
+                                <li>Managed automated routing of transformed data into categorized destination S3 folders for organized downstream consumption.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Project 1.3 -->
+                        <div class="bg-brand-dark/70 rounded-xl p-5 border border-brand-border/60 space-y-3">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <h4 class="text-base font-bold text-emerald-300 flex items-center gap-2">
+                                    <i class="fa-solid fa-shield-halved text-sm"></i> Project: Data Governance & Marketplace Automation
+                                </h4>
+                                <span class="text-xs font-mono text-slate-400 bg-brand-border/40 px-2.5 py-1 rounded">Sept 2024 – April 2025</span>
+                            </div>
+                            <ul class="space-y-2 text-xs sm:text-sm text-slate-300 list-disc list-inside leading-relaxed">
+                                <li>Automated data marketplace collection creation by developing Python scripts parsing client Excel mapping specifications.</li>
+                                <li>Utilized <strong class="text-white">Informatica REST APIs</strong> directly from Python to create, populate, and configure marketplace collections without manual entry.</li>
+                                <li>Extracted metadata using Informatica IICS Metadata Command Center (MCC) scanners and built Python utilities to validate missing descriptions, stewards, and trustees.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Company 2: MACTORES -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-6 md:p-8 space-y-6 relative overflow-hidden group hover:border-blue-500/50 transition-all shadow-xl">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-brand-border/60 pb-5">
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-extrabold text-white">MACTORES</h3>
+                            <p class="text-blue-400 font-medium text-sm mt-1">Data Engineer</p>
+                        </div>
+                        <div class="text-left md:text-right">
+                            <span class="inline-block px-3 py-1 rounded-lg bg-brand-dark border border-brand-border text-xs font-mono text-slate-300">
+                                <i class="fa-regular fa-calendar-alt text-blue-400 mr-2"></i>April 2023 – August 2024
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+
+                        <!-- Project 2.1 -->
+                        <div class="bg-brand-dark/70 rounded-xl p-5 border border-brand-border/60 space-y-3">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <h4 class="text-base font-bold text-blue-300 flex items-center gap-2">
+                                    <i class="fa-brands fa-google text-sm"></i> Project: Data Lake & Real-Time Analytics
+                                </h4>
+                                <span class="text-xs font-mono text-slate-400 bg-brand-border/40 px-2.5 py-1 rounded">April 2023 – August 2024</span>
+                            </div>
+                            <ul class="space-y-2 text-xs sm:text-sm text-slate-300 list-disc list-inside leading-relaxed">
+                                <li>Developed Spark Structured Streaming pipelines to process real-time event/log data via <strong class="text-white">Google Cloud Pub/Sub</strong> into BigQuery and Bigtable.</li>
+                                <li>Built data transformation pipelines using <strong class="text-white">GCP Dataflow and Dataproc</strong>, organizing data through raw, processed, and curated zones in Cloud Storage.</li>
+                                <li>Orchestrated workflows using Cloud Composer (managed Apache Airflow) and monitored pipeline health via Cloud Logging and Cloud Monitoring.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Project 2.2 -->
+                        <div class="bg-brand-dark/70 rounded-xl p-5 border border-brand-border/60 space-y-3">
+                            <h4 class="text-base font-bold text-purple-300 flex items-center gap-2">
+                                <i class="fa-solid fa-server text-sm"></i> Project: Cloud Migration & Data Warehousing
+                            </h4>
+                            <ul class="space-y-2 text-xs sm:text-sm text-slate-300 list-disc list-inside leading-relaxed">
+                                <li>Built scalable ETL pipelines moving and transforming data from Google Cloud Storage into BigQuery cloud data lakes.</li>
+                                <li>Executed data profiling, cleansing, and validation using <strong class="text-white">PySpark and Databricks</strong> to ensure data consistency and reliability.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Company 3: PLAYPOWER LABS -->
+                <div class="bg-brand-card border border-brand-border rounded-2xl p-6 md:p-8 space-y-6 relative overflow-hidden group hover:border-purple-500/50 transition-all shadow-xl">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-brand-border/60 pb-5">
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-extrabold text-white">PLAYPOWER LABS</h3>
+                            <p class="text-purple-400 font-medium text-sm mt-1">Data Engineer</p>
+                        </div>
+                        <div class="text-left md:text-right">
+                            <span class="inline-block px-3 py-1 rounded-lg bg-brand-dark border border-brand-border text-xs font-mono text-slate-300">
+                                <i class="fa-regular fa-calendar-alt text-purple-400 mr-2"></i>December 2022 – April 2023
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="bg-brand-dark/70 rounded-xl p-5 border border-brand-border/60 space-y-3">
+                        <h4 class="text-base font-bold text-purple-300 flex items-center gap-2">
+                            <i class="fa-solid fa-database text-sm"></i> Project: Data Warehousing Pipeline Integration
+                        </h4>
+                        <ul class="space-y-2 text-xs sm:text-sm text-slate-300 list-disc list-inside leading-relaxed">
+                            <li>Configured log-based replication pipelines from PostgreSQL databases to cloud data warehouses using <strong class="text-white">Fivetran and Stitch</strong>.</li>
+                            <li>Created metadata and batch data pipelines in <strong class="text-white">Talend</strong> to process relational database records, CSV files, and JSON formats into analytical targets.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Education & Certifications Section -->
+        <section id="education" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            <!-- Certification Card -->
+            <div class="bg-brand-card border border-brand-border rounded-2xl p-6 md:p-8 space-y-4 hover:border-cyan-500/50 transition-all shadow-xl">
+                <div class="flex items-center space-x-3 pb-3 border-b border-brand-border/60">
+                    <div class="p-3 bg-cyan-500/10 rounded-xl text-cyan-400">
+                        <i class="fa-solid fa-award text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Professional Certification</h3>
+                        <p class="text-xs text-brand-textMuted">Industry Validated Credentials</p>
+                    </div>
+                </div>
+
+                <div class="p-5 bg-gradient-to-r from-cyan-950/40 to-brand-dark rounded-xl border border-cyan-500/30 flex items-start space-x-4">
+                    <i class="fa-brands fa-microsoft text-3xl text-cyan-400 mt-1"></i>
+                    <div class="space-y-1">
+                        <h4 class="text-base font-bold text-white">Microsoft Certified: Azure Data Engineer Associate</h4>
+                        <p class="text-xs text-cyan-300">Microsoft Azure Certification</p>
+                        <p class="text-xs text-slate-400 pt-1">Demonstrated technical mastery in integrating, transforming, and consolidating data from structured and unstructured systems into analytical structures.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education Card -->
+            <div class="bg-brand-card border border-brand-border rounded-2xl p-6 md:p-8 space-y-4 hover:border-purple-500/50 transition-all shadow-xl">
+                <div class="flex items-center space-x-3 pb-3 border-b border-brand-border/60">
+                    <div class="p-3 bg-purple-500/10 rounded-xl text-purple-400">
+                        <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Academic Qualifications</h3>
+                        <p class="text-xs text-brand-textMuted">Formal Education Background</p>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="p-4 bg-brand-dark/70 rounded-xl border border-brand-border/60">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="text-sm font-bold text-white">Bachelor of Engineering (Mechanical)</h4>
+                                <p class="text-xs text-purple-300">BAMU University, Aurangabad</p>
+                            </div>
+                            <span class="text-xs font-mono text-slate-400 bg-brand-border/40 px-2 py-0.5 rounded">July 2017</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="p-3 bg-brand-dark/50 rounded-xl border border-brand-border/40">
+                            <span class="text-xs text-slate-400 block">HSC Science</span>
+                            <span class="text-xs font-semibold text-slate-200">Maharashtra Board (2013)</span>
+                        </div>
+                        <div class="p-3 bg-brand-dark/50 rounded-xl border border-brand-border/40">
+                            <span class="text-xs text-slate-400 block">SSC</span>
+                            <span class="text-xs font-semibold text-slate-200">Maharashtra Board (2011)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="bg-gradient-to-br from-brand-card via-brand-dark to-brand-card border border-cyan-500/30 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+            <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-3xl mx-auto text-center space-y-6">
+                <span class="px-3 py-1 rounded-full bg-cyan-950 border border-cyan-500/40 text-cyan-300 text-xs font-semibold uppercase tracking-wider">
+                    Let's Collaborate
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    Interested in Building Next-Gen Data Solutions?
+                </h2>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    I am actively available for senior data engineering roles, cloud lakehouse architecture discussions, and data platform optimization projects.
+                </p>
+
+                <!-- Contact Badges -->
+                <div class="pt-4 flex flex-wrap justify-center gap-4">
+                    <a href="https://www.linkedin.com/in/vaibhav-gajewar-dataengineer" target="_blank" rel="noopener noreferrer" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-sm flex items-center space-x-2 shadow-lg glow-cyan transition-all">
+                        <i class="fa-brands fa-linkedin text-lg"></i>
+                        <span>LinkedIn Profile</span>
+                    </a>
+
+                    <button onclick="copyToClipboard('vaibhavgajewar1@gmail.com', 'Email address')" class="px-6 py-3.5 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-cyan-500/30 text-white font-medium text-sm flex items-center space-x-2 transition-all">
+                        <i class="fa-solid fa-envelope text-cyan-400"></i>
+                        <span>vaibhavgajewar1@gmail.com</span>
+                    </button>
+
+                    <button onclick="copyToClipboard('7675801488', 'Phone number')" class="px-6 py-3.5 rounded-xl bg-brand-card hover:bg-brand-cardHover border border-cyan-500/30 text-white font-medium text-sm flex items-center space-x-2 transition-all">
+                        <i class="fa-solid fa-phone text-emerald-400"></i>
+                        <span>7675801488</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-brand-border py-8 bg-brand-dark/90 text-center text-xs text-brand-textMuted">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p>© 2026 Vaibhav Gajewar. All rights reserved.</p>
+            <p class="font-mono">Data Engineer • Azure Certified • MS Fabric & GCP Specialist</p>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Logic -->
+    <script>
+        // Mobile Navigation Menu Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Skill Filtering Logic
+        function filterSkills(category) {
+            const cards = document.querySelectorAll('.skill-card');
+            const btns = document.querySelectorAll('.skill-tab-btn');
+
+            // Toggle active button style
+            btns.forEach(btn => {
+                if (btn.getAttribute('data-category') === category) {
+                    btn.classList.add('bg-cyan-500', 'text-slate-950', 'font-bold');
+                    btn.classList.remove('text-slate-300');
+                } else {
+                    btn.classList.remove('bg-cyan-500', 'text-slate-950', 'font-bold');
+                    btn.classList.add('text-slate-300');
+                }
+            });
+
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Copy To Clipboard Function
+        function copyToClipboard(text, label) {
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            showToast(`${label} copied: ${text}`);
+        }
+
+        // Show Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
